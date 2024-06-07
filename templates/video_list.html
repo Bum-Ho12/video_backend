@@ -1,0 +1,8 @@
+<h2>Video List</h2>
+<ul>
+    {% for video in videos %}
+    <li>
+        <a href="{% url 'video_detail' video.pk %}">{{ video.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
