@@ -16,4 +16,4 @@ class Video(models.Model):
     upload_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.title}'
+        return f'{self.title} - {self.upload_date}'
