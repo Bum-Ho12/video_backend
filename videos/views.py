@@ -8,6 +8,13 @@ from .models import Video
 from .forms import VideoForm
 
 
+def documentation(request):
+    '''
+    method: documentation
+    description: This method is used to render the documentation page.
+    '''
+    return render(request, 'documentation.html')
+
 def upload_video(request):
     '''
     method: upload_video

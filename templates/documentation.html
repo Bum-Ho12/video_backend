@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Video Application Documentation</h1>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <section>
+                <h2>Welcome</h2>
+                <p>Here you can find the documentation for the Video application.</p>
+            </section>
+            <section>
+                <h2>Endpoints</h2>
+                <h2>Endpoints</h2>
+                <p class="allowed-host">Allowed Host: {{ request.get_host }}</p> <!-- Display the allowed host -->
+                <ul>
+                    <li><a href="/videos/"><strong>GET ::  / </strong> - Video list</a></li>
+                    <li><a href="/videos/upload/"><strong>GET :: /upload/</strong> - Upload video form</a></li>
+                    <li><a href="/videos/1/"><strong>GET :: /&lt;int:pk&gt;/</strong> - Video detail</a></li>
+                    <li><a href="/api/videos/"><strong>GET :: /api/videos/</strong> - API to list and create videos</a></li>
+                    <li><a href="/api/videos/"><strong>POST :: /api/videos/</strong> - API to upload a video</a></li>
+                    <li><a href="/api/videos/1/"><strong>GET :: /api/videos/&lt;int:pk&gt;/</strong> - API to retrieve, update, and destroy a video</a></li>
+                </ul>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Video Application</p>
+        </div>
+    </footer>
+</body>
+</html>
