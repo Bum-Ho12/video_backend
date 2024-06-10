@@ -12,6 +12,8 @@ urlpatterns = [
     path('videos/', views.video_list, name='video_list'),
     path('videos/upload/', views.upload_video, name='upload_video'),
     path('videos/<int:pk>/', views.video_detail, name='video_detail'),
+    path('videos/front/', views.upload_video_front_view, name='upload_video_front'),
+    path('save-video-metadata/', views.save_video_metadata, name='save_video_metadata'),
     path('api/videos/', VideoListCreateAPIView.as_view(), name='api_video_list_create'),
     path('api/videos/<int:pk>/',
         VideoRetrieveUpdateDestroyAPIView.as_view(), name='api_video_detail'),

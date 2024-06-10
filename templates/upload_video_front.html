@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Video</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Container */
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #0779e4;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        form input[type="file"],
+        form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            background-color: #0779e4;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #055aad;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Upload Video</h1>
+        </header>
+        <main>
+            <form id="upload-form">
+                <div class="form-group">
+                    <label for="file">Select Video File:</label>
+                    <input type="file" id="file" name="file">
+                </div>
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description"></textarea>
+                </div>
+                <button type="button" onclick="uploadFile()">Upload</button>
+            </form>
+        </main>
+        <footer>
+            <p>&copy; 2024 Video Application</p>
+        </footer>
+    </div>
+
+    <script>
+        function uploadFile() {
+            const file = document.getElementById('file').files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const url = 'https://api.cloudinary.com/v1_1/<your-cloud-name>/upload'; // Replace <your-cloud-name> with your Cloudinary cloud name
+
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                const videoMetadata = {
+                    title: document.getElementById('title').value,
+                    description: document.getElementById('description').value,
+                    video_file: data.secure_url,
+                };
+
+                fetch('/save-video-metadata/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken'), // Get CSRF token from cookies
+                    },
+                    body: JSON.stringify(videoMetadata),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Video metadata saved:', data);
+                    // Redirect or notify user
+                })
+                .catch(error => {
+                    console.error('Error saving video metadata:', error);
+                });
+            })
+            .catch(error => {
+                console.error('Error uploading file:', error);
+            });
+        }
+
+        // Function to get CSRF token from cookies
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</body>
+</html>

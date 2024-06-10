@@ -21,11 +21,11 @@
             </section>
             <section>
                 <h2>Endpoints</h2>
-                <h2>Endpoints</h2>
                 <p class="allowed-host">Allowed Host: {{ request.get_host }}</p> <!-- Display the allowed host -->
                 <ul>
                     <li><a href="/videos/"><strong>GET ::  / </strong> - Video list</a></li>
-                    <li><a href="/videos/upload/"><strong>GET :: /upload/</strong> - Upload video form</a></li>
+                    <li><a href="/videos/upload/"><strong>GET :: /upload/</strong> - Upload video form backend</a></li>
+                    <li><a href="/videos/front/"><strong>GET :: /front/</strong> - Upload video form with frontend</a></li>
                     <li><a href="/videos/1/"><strong>GET :: /&lt;int:pk&gt;/</strong> - Video detail</a></li>
                     <li><a href="/api/videos/"><strong>GET :: /api/videos/</strong> - API to list and create videos</a></li>
                     <li><a href="/api/videos/"><strong>POST :: /api/videos/</strong> - API to upload a video</a></li>

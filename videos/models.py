@@ -4,6 +4,8 @@ location: videos/models.py
 """
 
 from django.db import models
+# pylint:disable=E0401
+from cloudinary.models import CloudinaryField  # type: ignore
 
 class Video(models.Model):
     '''
@@ -12,7 +14,7 @@ class Video(models.Model):
     '''
     title = models.CharField(max_length=255,blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    video_file = models.FileField(upload_to='videos')
+    video_file = CloudinaryField('video_file', resource_type='video')
     upload_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

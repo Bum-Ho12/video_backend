@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+# pylint:disable=E0401
+import cloudinary # type: ignore
+import cloudinary.uploader # type: ignore
+import cloudinary.api # type: ignore
 
 # Loading env variables
 load_dotenv()
@@ -45,7 +49,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'videos',
     'cloudinary',
-    'cloudinary_storage',
+    # 'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -97,13 +101,20 @@ DATABASES = {
 }
 
 # Bucket storage
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CD_NAME'),
-    'API_KEY': os.environ.get('CD_KEY'),
-    'API_SECRET': os.environ.get('CD_SECRET'),
-    'RESOURCE_TYPE': 'video'
-}
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.VideoMediaCloudinaryStorage'
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': os.environ.get('CD_NAME'),
+#     'API_KEY': os.environ.get('CD_KEY'),
+#     'API_SECRET': os.environ.get('CD_SECRET'),
+#     'RESOURCE_TYPE': 'video'
+# }
+
+cloudinary.config(
+    cloud_name = os.environ.get('CD_NAME'),
+    api_key = os.environ.get('CD_KEY'),
+    api_secret = os.environ.get('CD_SECRET'),
+)
+
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.VideoMediaCloudinaryStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
